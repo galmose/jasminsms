@@ -1,8 +1,28 @@
 # 🚀 VWAP Revolutionary pour MT4
 
+## 💎 NOUVEAU : Version Optimisée pour l'Or (XAUUSD)
+
+**🎯 Traders d'or, utilisez `VWAP_Revolutionary_GOLD.mq4` !**
+
+Version spécialement optimisée pour XAUUSD sur timeframes **M5 à H1** avec :
+- ✅ Paramètres auto-adaptés selon le timeframe
+- ✅ Filtre ATR pour la volatilité de l'or
+- ✅ Ratio risque/récompense optimisé
+- ✅ Alertes avec SL/TP suggérés
+- ✅ Panel d'information spécial or
+
+**📖 [Lisez le Guide Complet XAUUSD ici](GUIDE_XAUUSD.md)**
+
+---
+
 ## Description
 
 **VWAP Revolutionary** est un indicateur MT4 innovant conçu spécialement pour les débutants en trading. Il combine la puissance du **VWAP (Volume Weighted Average Price)** avec une **Moyenne Mobile de 72 périodes (MA72)** pour générer des signaux d'achat précis et faciles à comprendre.
+
+### 📦 Deux Versions Disponibles
+
+1. **`VWAP_Revolutionary_MA72.mq4`** - Version universelle (tous symboles)
+2. **`VWAP_Revolutionary_GOLD.mq4`** - Version optimisée pour XAUUSD (recommandée pour l'or)
 
 ### ✨ Caractéristiques Principales
 
@@ -39,24 +59,59 @@ Un signal d'achat (flèche verte) apparaît quand **TOUTES** ces conditions sont
 - Support/résistance dynamique
 - Les rebonds sur cette ligne sont des opportunités
 
+## 🎯 Quelle Version Choisir ?
+
+### Pour XAUUSD (Or) → `VWAP_Revolutionary_GOLD.mq4`
+
+**Utilisez cette version si** :
+- ✅ Vous tradez XAUUSD (or) exclusivement ou principalement
+- ✅ Vous voulez des paramètres pré-optimisés
+- ✅ Vous tradez en M5, M15, M30 ou H1
+- ✅ Vous voulez un filtre ATR et R:R automatique
+
+**Avantages** :
+- 🎯 Paramètres auto-adaptés au timeframe
+- 💎 Optimisé pour la volatilité de l'or
+- 📊 Alertes avec SL/TP suggérés
+- 🔧 Moins de faux signaux
+
+### Pour Forex/Indices → `VWAP_Revolutionary_MA72.mq4`
+
+**Utilisez cette version si** :
+- ✅ Vous tradez EUR/USD, GBP/USD, etc.
+- ✅ Vous tradez des indices (US30, NAS100, etc.)
+- ✅ Vous voulez personnaliser tous les paramètres
+- ✅ Version universelle polyvalente
+
+---
+
 ## 🔧 Installation
 
-### Étape 1 : Copier le fichier
+### Étape 1 : Choisir le bon fichier
+
+**Pour l'or** : `VWAP_Revolutionary_GOLD.mq4`
+**Pour forex/indices** : `VWAP_Revolutionary_MA72.mq4`
+
+### Étape 2 : Copier le fichier
 1. Localisez votre dossier MT4 : `Fichier > Ouvrir le dossier de données`
 2. Naviguez vers `MQL4/Indicators/`
-3. Copiez le fichier `VWAP_Revolutionary_MA72.mq4` dans ce dossier
+3. Copiez le fichier choisi dans ce dossier
 
-### Étape 2 : Compiler (optionnel)
+### Étape 3 : Compiler (optionnel)
 1. Ouvrez l'éditeur MetaEditor (F4 dans MT4)
-2. Ouvrez le fichier `VWAP_Revolutionary_MA72.mq4`
+2. Ouvrez le fichier que vous avez copié
 3. Cliquez sur "Compiler" (F7)
 
-### Étape 3 : Appliquer sur un graphique
+### Étape 4 : Appliquer sur un graphique
 1. Redémarrez MT4 ou rafraîchissez le Navigateur (Ctrl+N)
 2. Dans le Navigateur, allez dans `Indicateurs > Custom`
-3. Glissez-déposez `VWAP_Revolutionary_MA72` sur votre graphique
+3. Glissez-déposez l'indicateur choisi sur votre graphique :
+   - Pour l'or : `VWAP_Revolutionary_GOLD`
+   - Pour forex/indices : `VWAP_Revolutionary_MA72`
 
 ## ⚙️ Paramètres Personnalisables
+
+### Version Standard (MA72)
 
 | Paramètre | Par défaut | Description |
 |-----------|------------|-------------|
@@ -68,6 +123,26 @@ Un signal d'achat (flèche verte) apparaît quand **TOUTES** ces conditions sont
 | **Show_Alerts** | true | Activer les alertes sonores |
 | **Show_Panel** | true | Afficher le panel d'information |
 | **Panel_Color** | Dark Gray | Couleur du panel |
+
+### Version GOLD (Optimisée XAUUSD)
+
+| Paramètre | Par défaut | Description |
+|-----------|------------|-------------|
+| **MA_Period** | 72 | Période de la moyenne mobile |
+| **MA_Method** | EMA | Méthode MA (EMA recommandée pour l'or) |
+| **Auto_Optimize** | true | **IMPORTANT** : Optimisation auto selon timeframe |
+| **Wick_Test_Distance** | 80 | Distance max test mèche (adapté pour l'or) |
+| **Rejection_MinSize** | 150 | Taille min mèche (adapté pour l'or) |
+| **ATR_Period** | 14 | Période ATR pour filtre volatilité |
+| **ATR_Multiplier** | 1.5 | Multiplicateur ATR |
+| **Use_ATR_Filter** | true | Activer filtre ATR (recommandé) |
+| **Use_Trend_Filter** | true | Activer filtre de tendance (recommandé) |
+| **Min_RiskReward** | 1.5 | Ratio risque/récompense minimum |
+| **VWAP_StdDev** | 2.0 | Écart-type pour les bandes VWAP |
+| **Show_Alerts** | true | Alertes sonores avec SL/TP |
+| **Show_Panel** | true | Panel optimisé pour l'or |
+
+**⚠️ Pour l'or : Laissez `Auto_Optimize = true` pour bénéficier de l'optimisation automatique !**
 
 ## 📈 Guide d'Utilisation pour Débutants
 
@@ -146,8 +221,18 @@ Résultat :
 
 ## 🔄 Versions et Mises à Jour
 
-**Version 1.00** (2025)
-- Version initiale
+**Version 2.00 - GOLD** (2025)
+- 💎 **NOUVEAU** : Version optimisée pour XAUUSD
+- Paramètres auto-adaptés selon timeframe (M5-H1)
+- Filtre ATR pour volatilité
+- Filtre de tendance avancé
+- Ratio risque/récompense minimum
+- Alertes avec SL/TP suggérés
+- EMA par défaut (plus réactive)
+- Panel optimisé pour l'or
+
+**Version 1.00 - Standard** (2025)
+- Version universelle (tous symboles)
 - VWAP avec reset quotidien
 - MA72 avec détection des rebonds
 - Signaux d'éjection/rejet
@@ -162,10 +247,22 @@ Pour toute question ou suggestion d'amélioration, n'hésitez pas à ouvrir une 
 
 ## 🎯 Résumé Rapide
 
-**Pour les débutants pressés :**
+### Pour Traders d'Or (XAUUSD)
 
-1. ✅ Installez l'indicateur dans MT4
-2. ✅ Appliquez-le sur votre graphique préféré (M15, M30 ou H1)
+**📖 [Guide Complet XAUUSD ici](GUIDE_XAUUSD.md)** ← Commencez par ici !
+
+1. ✅ Installez `VWAP_Revolutionary_GOLD.mq4` dans MT4
+2. ✅ Appliquez sur XAUUSD en M15 ou M30 (recommandé débutants)
+3. ✅ Laissez `Auto_Optimize = true` (paramètres adaptés automatiquement)
+4. ✅ Attendez flèche verte + alerte avec SL/TP
+5. ✅ Vérifiez panel : "Haussier ✓" + "Au-dessus ✓"
+6. ✅ Entrez selon session (Londres/New York)
+7. ✅ Respectez le R:R minimum de 1.5
+
+### Pour Traders Forex/Indices
+
+1. ✅ Installez `VWAP_Revolutionary_MA72.mq4` dans MT4
+2. ✅ Appliquez sur votre graphique préféré (M15, M30 ou H1)
 3. ✅ Attendez une flèche verte avec alerte sonore
 4. ✅ Vérifiez que le prix est au-dessus du VWAP et de la MA72
 5. ✅ Entrez en position acheteuse
