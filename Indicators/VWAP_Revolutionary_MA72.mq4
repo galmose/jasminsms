@@ -258,39 +258,55 @@ bool DetectMA72Signal(int index,
    if(ma72 == EMPTY_VALUE || ma72 == 0)
       return false;
 
-   //--- La mèche doit tester la MA72
-   double distanceToMA = MathAbs(low[index] - ma72) / Point;
+   //--- CONDITION 1: La mèche BASSE doit PIQUER/TESTER la MA72
+   // La mèche doit traverser ou toucher très près la MA72 par le BAS
+   double distanceToMA = (low[index] - ma72) / Point; // Distance signée (négatif = traverse, positif = au-dessus)
 
-   //--- Conditions pour un signal valide:
-   //--- 1. La mèche basse teste la MA72 (distance < seuil)
-   //--- 2. La bougie clôture AU-DESSUS de la MA72 (rejet/éjection)
-   //--- 3. La mèche doit être significative
+   // La mèche doit soit traverser la MA72, soit être très proche (en-dessous ou légèrement au-dessus)
+   bool wickPiercesMA = (distanceToMA <= Wick_Test_Distance) &&
+                        (distanceToMA >= -Wick_Test_Distance * 0.5); // Peut traverser jusqu'à 50% de la distance
 
-   bool wickTestsMA = (distanceToMA <= Wick_Test_Distance);
+   //--- CONDITION 2: La CLÔTURE doit être AU-DESSUS de la MA72 (ÉJECTION)
    bool closesAboveMA = (close[index] > ma72);
 
    //--- Taille de la mèche basse
-   double wickSize = (close[index] > open[index]) ?
-                     (MathMin(open[index], close[index]) - low[index]) :
-                     (MathMin(open[index], close[index]) - low[index]);
-
-   wickSize = wickSize / Point;
+   double bodyBottom = MathMin(open[index], close[index]);
+   double wickSize = (bodyBottom - low[index]) / Point;
 
    bool significantWick = (wickSize >= Rejection_MinSize);
 
-   //--- Bougie haussière après le test
+   //--- CONDITION 3: ÉJECTION CLAIRE - La clôture doit être SIGNIFICATIVEMENT au-dessus de la MA72
+   // L'éjection doit représenter au moins 30% de la taille de la mèche
+   double ejectionSize = (close[index] - ma72) / Point;
+   bool clearEjection = (ejectionSize >= wickSize * 0.3); // Éjection >= 30% de la mèche
+
+   //--- CONDITION 4: Bougie haussière (montre la force du rebond)
    bool bullishCandle = (close[index] >= open[index]);
 
-   //--- Conditions additionnelles pour améliorer la qualité du signal
-   //--- Le corps de la bougie doit être au-dessus de MA72
-   double bodyBottom = MathMin(open[index], close[index]);
-   bool bodyAboveMA = (bodyBottom >= ma72 * 0.9995); // Petite tolérance
+   //--- CONDITION 5: Le corps de la bougie doit être au-dessus de MA72
+   bool bodyAboveMA = (bodyBottom >= ma72);
 
-   //--- VWAP comme filtre additionnel (optionnel mais recommandé)
+   //--- CONDITION 6: VWAP comme filtre additionnel (optionnel mais recommandé)
    bool aboveVWAP = (close[index] > VWAPBuffer[index]);
 
-   //--- Signal valide si toutes les conditions sont réunies
-   if(wickTestsMA && closesAboveMA && significantWick && bullishCandle)
+   //--- CONDITION 7: Force de la bougie (ratio corps/mèche)
+   double bodySize = MathAbs(close[index] - open[index]);
+   double totalSize = high[index] - low[index];
+   bool strongRejection = (totalSize > 0) && (wickSize / totalSize >= 0.4); // Mèche = au moins 40% de la bougie
+
+   //--- VALIDATION FINALE: Signal valide si TOUTES les conditions sont réunies
+   // CONDITIONS OBLIGATOIRES pour un rebond/éjection sur MA72:
+   // 1. wickPiercesMA     : La mèche BASSE pique/teste la MA72
+   // 2. closesAboveMA     : La clôture est AU-DESSUS de la MA72
+   // 3. clearEjection     : L'éjection est CLAIRE et SIGNIFICATIVE
+   // 4. significantWick   : La mèche est suffisamment grande
+   // 5. bullishCandle     : Bougie haussière (force du rebond)
+   // 6. bodyAboveMA       : Le corps est au-dessus de la MA72
+   // 7. aboveVWAP         : Tendance haussière (prix > VWAP)
+   // 8. strongRejection   : Rejet fort visible
+
+   if(wickPiercesMA && closesAboveMA && clearEjection && significantWick &&
+      bullishCandle && bodyAboveMA && aboveVWAP && strongRejection)
    {
       return true;
    }
